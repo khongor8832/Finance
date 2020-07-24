@@ -6,7 +6,11 @@ var uiController = (function() {
       inputValue: ".add__value",
       addBtn: ".add__btn",
       incomeList: ".income__list",
-      expenseList: ".expenses__list"
+      expenseList: ".expenses__list",
+      tusuvLabel: ".budget__value",
+      incomeLabel: ".budget__income--value",
+      expenseLabel: ".budget__expenses--value",
+      percentageLabel: ".budget__expenses--percentage"
     };
   
     return {
@@ -41,7 +45,20 @@ var uiController = (function() {
         //   fieldsArr[i].value = "";
         // }
       },
-  
+
+        tusuviigUzuuleh: function(tusuv) {
+            document.querySelector(DOMstrings.tusuvLabel).textContent = tusuv.tusuv;
+            document.querySelector(DOMstrings.incomeLabel).textContent = tusuv.totalInc;
+            document.querySelector(DOMstrings.expenseLabel).textContent = tusuv.totalExp;
+
+            if(tusuv.huvi !== 0){
+                document.querySelector(DOMstrings.percentageLabel).textContent = tusuv.huvi + "%";
+            }else{
+                document.querySelector(DOMstrings.percentageLabel).textContent = tusuv.huvi;
+            }
+            
+        },
+
       addListItem: function(item, type) {
          // Орлого зарлагын элементийг агуулсан HTML-ийг бэлтгэнэ. \
         var html, list;
@@ -172,7 +189,8 @@ var uiController = (function() {
         // 5. Эцсийн үлдэгдэл
         var tusuv = financeController.tusuvAvah();
         // 6. Төсвийн тооцоог дэлгэцэнд гаргана. 
-        console.log(tusuv);
+        uiController.tusuviigUzuuleh(tusuv);
+        
       }
     };
   
@@ -193,6 +211,12 @@ var uiController = (function() {
     return {
       init: function() {
         console.log("Application started...");
+        uiController.tusuviigUzuuleh({
+            tusuv: 0,
+            huvi: 0,
+            totalInc: 0,
+            totalExp: 0
+        })
         setupEventListeners();
       }
     };
