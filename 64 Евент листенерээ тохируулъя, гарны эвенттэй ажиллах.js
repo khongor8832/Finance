@@ -4,7 +4,9 @@ var uiController = (function(){
         inputType: ".add__type",
         inputDescription: ".add__description",
         inputValue: ".add__value",
-        addBtn: ".add__btn"
+        addBtn: ".add__btn",
+        incomeList: ".income__lsit",
+        expenseList: ".expense__lsit",
     }
     return {
         getInput: function() {
@@ -17,14 +19,32 @@ var uiController = (function(){
         getDomstring: function () {
             return DOMstring;
         },
+
+        clearFields: function() {
+            var fields = document.querySelectorAll(DOMstring.inputDescription + ", " + DOMstring.inputValue);
+            // convert list to array 
+            // Бичсэн зүйлээ арилгах функц 
+            var fieldsArr = Array.prototype.slice.call(fields);
+
+            fieldsArr.forEach(function (el, index, array) {
+                el.value = "";
+            });
+            // Курсураа хаана аваачихийг зааж өгдөг.   
+            fieldsArr[0].focus();
+            // for (var i = 0; i < fieldsArr.length; i++) {
+            //     fieldsArr[i].value = "";
+            // }
+
+        },
         addListItem: function(item, type) {
             // Орлого зарлагын элементийг агуулсан HTML-ийг бэлтгэнэ. \
             var html, list;
-            list = '.income__list'
+            
             if(type === 'inc') {
+                list = DOMstring.incomeList;
                 html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%%DESCRIPTION%%</div><div class="right clearfix"><div class="item__value">%%VALUE%%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
             } else {
-                list = '.expenses__list'
+                list = DOMstring.expenseList;
                 html = '<div class="pense__liitem clearfix" id="expense-%id%"><div class="item__description">%%DESCRIPTION%%</div><div class="right clearfix"><div class="item__value">%%VALUE%%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 
             }
@@ -93,6 +113,7 @@ var appController = (function(uiController, fnController){
              var item = financeController.addItem(input.type, input.description, input.value);
         // 3. Олж авсан өгөгдлүүдээ вэб дээрээ тохирох хэсэгт нь гаргана. 
              uiController.addListItem(item, input.type);
+             uiController.clearFields();
         // 4. Төсвийг тооцоолно. 
         // 5. Эцсийн үлдэгдэл, тооцоог дэлгэцэнд гаргана. 
     };
