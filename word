@@ -15,12 +15,21 @@ field - талбар талбай
 
 Javascript фунцуудын танилцуулга. 
 
+reverse - массивийг эргүүлдэг функц
+for
+forEach - давталтыг хурдан хийдаг. 
 parselnt - тэмдэгт мөрйиг тоо руу хөрвүүлдэг. 
 map
 
 
 
 split - Тэмдэгт мөрөн дээр ашиглагддаг. Жишээ нь: 
+join - split яг эсрэг 
+
+var a = "123456789";
+console.log("1. тоо " + a);
+var x = a.split("");
+console.log(x.reverse().join(" "));
 
 // var str = "Өнөөдөр сайхан өдөр байна.";
 // var x = str.split(" ")
