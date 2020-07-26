@@ -4,8 +4,36 @@ focus - чиглүүлэх
 slice - хэрчих хэрчим
 field - талбар талбай 
 
+ямар нэгэн элементийн парантыг гаргая гэвэл дарагдсан элементийн парантыг parantNode гэнэ. 
+ document.querySelector(DOM.containerDiv).addEventListener('click', function(event){
+  console.log(event.target);       
+  console.log(event.target.parentNode);       
+  console.log(event.target.parentNode.parentNode);       
+  console.log(event.target.parentNode.parentNode.parentNode);       
+  console.log(event.target.parentNode.parentNode.parentNode.parentNode);       
+   });
 
-
+Javascript фунцуудын танилцуулга. 
 
 parselnt - тэмдэгт мөрйиг тоо руу хөрвүүлдэг. 
-parselnt - тэмдэгт мөрйиг тоо руу хөрвүүлдэг. 
+map
+
+
+
+split - Тэмдэгт мөрөн дээр ашиглагддаг. Жишээ нь: 
+
+// var str = "Өнөөдөр сайхан өдөр байна.";
+// var x = str.split(" ")
+// // энэ өгүүлбэрийн тэмдэгт зайгаар нь олж байна. 
+// console.log(x);
+// // ямар2 үг байгааг олж байна. 
+// console.log(x.length);
+// // хэдэн үг байгааг олж байна. 
+
+var str = "Өнөөдөр-сайхан-өдөр-байна.";
+var x = str.split("-")
+// энэ өгүүлбэрийн дунд талын - тэмдэгтээр нь олж байна. 
+console.log(x);
+// ямар2 үг байгааг олж байна. 
+console.log(x.length);
+// хэдэн үг байгааг олж байна.
