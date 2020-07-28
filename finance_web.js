@@ -22,8 +22,34 @@ var uiController = (function() {
         callback(list[i], i);
       }
     };
-    var formatMoney = function(too){
+    var formatMoney = function(too, type){
+      too = '' + too;
+      var a = too;
 
+var x = a.split("").reverse().join("");
+
+
+var y = '';
+var count = 1;
+
+for(var i=0; i < x.length; i++)
+{
+  y = y + x[i];
+
+  if( count%3 === 0 ) y = y + ',';
+  count ++;
+}
+
+
+var z = y.split("").reverse().join("");
+
+
+if(z[0] === ',') z = z.substr(1, z.length - 1);
+
+if (type === 'inc') z = "+ " + z;
+else z = "- " + z; 
+
+return z;
     };
 
     //  өнөөдрийн он сар өдөр гаргах функц 
@@ -31,6 +57,16 @@ var uiController = (function() {
         displayDate: function(){
             var unuudur = new Date();
             document.querySelector(DOMstrings.dataLabel).textContent = unuudur.getFullYear() + " оны " + unuudur.getMonth() + "сарын";
+        },
+        changeType: function(){
+          var fields = document.querySelectorAll(DOMstrings.inputType + ', '
+          + DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
+
+          nodeListForeach(fields, function(el){
+            el.classList.toggle('red-focus');
+          });
+
+          document.querySelector(DOMstrings.addBtn).classList.toggle("red");
         },
 
       getInput: function() {
@@ -72,11 +108,14 @@ var uiController = (function() {
       },
   
       tusviigUzuuleh: function(tusuv) {
-        document.querySelector(DOMstrings.tusuvLabel).textContent = tusuv.tusuv;
+        var type;
+        if(tusuv.tusuv > 0 ) type = 'inc';
+        else type = 'exp';
+        document.querySelector(DOMstrings.tusuvLabel).textContent = formatMoney(tusuv.tusuv, type);
         document.querySelector(DOMstrings.incomeLabel).textContent =
-          tusuv.totalInc;
+          formatMoney(tusuv.totalInc, 'inc');
         document.querySelector(DOMstrings.expeseLabel).textContent =
-          tusuv.totalExp;
+        formatMoney(tusuv.totalExp, 'exp');
   
         if (tusuv.huvi !== 0) {
           document.querySelector(DOMstrings.percentageLabel).textContent =
@@ -107,7 +146,7 @@ var uiController = (function() {
         // Тэр HTML дотороо орлого зарлага утгуудыг REPLACE ашиглаж өөрчилж өгнө.
         html = html.replace("%id%", item.id);
         html = html.replace("$$DESCRIPTION$$", item.description);
-        html = html.replace("$$VALUE$$", item.value);
+        html = html.replace("$$VALUE$$", formatMoney(item.value, type));
   
         // Бэлгэсэн HTML ээ DOM руу хийж өгнө. 
         document.querySelector(list).insertAdjacentHTML("beforeend", html);
@@ -302,6 +341,10 @@ var uiController = (function() {
           ctrlAddItem();
         }
       });
+
+      document
+      .querySelector(DOM.inputType)
+      .addEventListener("change", uiController.changeType);
   
       document
         .querySelector(DOM.containerDiv)
